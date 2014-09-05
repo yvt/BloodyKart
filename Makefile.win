@@ -1,0 +1,28 @@
+
+
+NAME=BloodyKart
+OBJS=  main.o  blur.o dof.o  server.o  bloom.o clientgame.o cmds.o   sfx.o SDL_tmixer.o \
+	 client.o  font.o map.o  mesh.o xparser.o skybox.o ai.o  global.o  glpng.o weapon.o effect.o gigen.o \
+	 clienthud.o hurtfx.o joyinput.o noise.o scenetree.o crosshair.o flare.o tonemap.o
+
+CXX=/usr/local/i386-mingw32-3.4.5/bin/i386-mingw32-g++
+LD=/usr/local/i386-mingw32-3.4.5/bin/i386-mingw32-g++
+
+LDFLAGS= -lm -lglew32s -lSDL -lSDL_mixer -lopengl32 -lglu32 -lpng -lSDL_net
+CXXFLAGS= -O -DWIN32 -mno-sse -mno-sse2 -mno-sse3
+
+$(NAME).exe:		$(OBJS)
+					$(LD)  -o $(NAME).exe  $(OBJS)  $(LDFLAGS)
+
+$(NAME).win32.zip:	$(NAME).exe res/* res/*/* res/*/*/*
+					rm -f $(NAME).win32.zip
+					zip $(NAME).win32.zip -r $(NAME).exe res SDL.dll SDL_mixer.dll SDL_net.dll \
+					glew32.dll libogg-0.dll libpng3.dll libvorbis-0.dll libvorbisfile-3.dll \
+					smpeg.dll zlib1.dll
+
+
+all:				$(NAME).exe
+zip:				$(NAME).win32.zip
+
+					
+

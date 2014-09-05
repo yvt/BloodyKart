@@ -1,0 +1,296 @@
+!!ARBfp1.0
+# cgc version 2.1.0016, build date Nov 20 2008
+# command line args: -oglsl -profile arbfp1
+#vendor NVIDIA Corporation
+#version 2.1.0.16
+#profile arbfp1
+#program main
+#semantic gl_FrontMaterial : state.material.front
+#semantic gl_LightSource : state.light
+#semantic gl_Fog : state.fog
+#semantic tex
+#semantic giTex
+#semantic bump
+#semantic bumped
+#semantic isNormalMap
+#semantic scale
+#semantic gIed
+#semantic texed
+#semantic bumpSizeInv
+#var float4 gl_Color : $vin.COLOR0 : COL0 : -1 : 1
+#var float4 gl_FrontMaterial.emission : state.material.front.emission :  : -1 : 0
+#var float4 gl_FrontMaterial.ambient : state.material.front.ambient :  : -1 : 0
+#var float4 gl_FrontMaterial.diffuse : state.material.front.diffuse :  : -1 : 0
+#var float4 gl_FrontMaterial.specular : state.material.front.specular : c[0] : -1 : 1
+#var float gl_FrontMaterial.shininess : state.material.front.shininess : c[1] : -1 : 1
+#var float4 gl_LightSource[0].ambient : state.light[0].ambient :  : -1 : 0
+#var float4 gl_LightSource[0].diffuse : state.light[0].diffuse : c[2] : -1 : 1
+#var float4 gl_LightSource[0].specular : state.light[0].specular :  : -1 : 0
+#var float4 gl_LightSource[0].position : state.light[0].position : c[3] : -1 : 1
+#var float4 gl_LightSource[0].halfVector : state.light[0].half :  : -1 : 0
+#var float3 gl_LightSource[0].spotDirection : state.light[0].spot.direction :  : -1 : 0
+#var float gl_LightSource[0].spotExponent : state.light[0].attenuation.w :  : -1 : 0
+#var float gl_LightSource[0].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[0].spotCosCutoff : state.light[0].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[0].constantAttenuation : state.light[0].attenuation.x :  : -1 : 0
+#var float gl_LightSource[0].linearAttenuation : state.light[0].attenuation.y :  : -1 : 0
+#var float gl_LightSource[0].quadraticAttenuation : state.light[0].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[1].ambient : state.light[1].ambient :  : -1 : 0
+#var float4 gl_LightSource[1].diffuse : state.light[1].diffuse : c[4] : -1 : 1
+#var float4 gl_LightSource[1].specular : state.light[1].specular :  : -1 : 0
+#var float4 gl_LightSource[1].position : state.light[1].position : c[5] : -1 : 1
+#var float4 gl_LightSource[1].halfVector : state.light[1].half :  : -1 : 0
+#var float3 gl_LightSource[1].spotDirection : state.light[1].spot.direction :  : -1 : 0
+#var float gl_LightSource[1].spotExponent : state.light[1].attenuation.w :  : -1 : 0
+#var float gl_LightSource[1].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[1].spotCosCutoff : state.light[1].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[1].constantAttenuation : state.light[1].attenuation.x :  : -1 : 0
+#var float gl_LightSource[1].linearAttenuation : state.light[1].attenuation.y :  : -1 : 0
+#var float gl_LightSource[1].quadraticAttenuation : state.light[1].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[2].ambient : state.light[2].ambient :  : -1 : 0
+#var float4 gl_LightSource[2].diffuse : state.light[2].diffuse :  : -1 : 0
+#var float4 gl_LightSource[2].specular : state.light[2].specular :  : -1 : 0
+#var float4 gl_LightSource[2].position : state.light[2].position :  : -1 : 0
+#var float4 gl_LightSource[2].halfVector : state.light[2].half :  : -1 : 0
+#var float3 gl_LightSource[2].spotDirection : state.light[2].spot.direction :  : -1 : 0
+#var float gl_LightSource[2].spotExponent : state.light[2].attenuation.w :  : -1 : 0
+#var float gl_LightSource[2].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[2].spotCosCutoff : state.light[2].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[2].constantAttenuation : state.light[2].attenuation.x :  : -1 : 0
+#var float gl_LightSource[2].linearAttenuation : state.light[2].attenuation.y :  : -1 : 0
+#var float gl_LightSource[2].quadraticAttenuation : state.light[2].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[3].ambient : state.light[3].ambient :  : -1 : 0
+#var float4 gl_LightSource[3].diffuse : state.light[3].diffuse :  : -1 : 0
+#var float4 gl_LightSource[3].specular : state.light[3].specular :  : -1 : 0
+#var float4 gl_LightSource[3].position : state.light[3].position :  : -1 : 0
+#var float4 gl_LightSource[3].halfVector : state.light[3].half :  : -1 : 0
+#var float3 gl_LightSource[3].spotDirection : state.light[3].spot.direction :  : -1 : 0
+#var float gl_LightSource[3].spotExponent : state.light[3].attenuation.w :  : -1 : 0
+#var float gl_LightSource[3].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[3].spotCosCutoff : state.light[3].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[3].constantAttenuation : state.light[3].attenuation.x :  : -1 : 0
+#var float gl_LightSource[3].linearAttenuation : state.light[3].attenuation.y :  : -1 : 0
+#var float gl_LightSource[3].quadraticAttenuation : state.light[3].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[4].ambient : state.light[4].ambient :  : -1 : 0
+#var float4 gl_LightSource[4].diffuse : state.light[4].diffuse :  : -1 : 0
+#var float4 gl_LightSource[4].specular : state.light[4].specular :  : -1 : 0
+#var float4 gl_LightSource[4].position : state.light[4].position :  : -1 : 0
+#var float4 gl_LightSource[4].halfVector : state.light[4].half :  : -1 : 0
+#var float3 gl_LightSource[4].spotDirection : state.light[4].spot.direction :  : -1 : 0
+#var float gl_LightSource[4].spotExponent : state.light[4].attenuation.w :  : -1 : 0
+#var float gl_LightSource[4].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[4].spotCosCutoff : state.light[4].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[4].constantAttenuation : state.light[4].attenuation.x :  : -1 : 0
+#var float gl_LightSource[4].linearAttenuation : state.light[4].attenuation.y :  : -1 : 0
+#var float gl_LightSource[4].quadraticAttenuation : state.light[4].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[5].ambient : state.light[5].ambient :  : -1 : 0
+#var float4 gl_LightSource[5].diffuse : state.light[5].diffuse :  : -1 : 0
+#var float4 gl_LightSource[5].specular : state.light[5].specular :  : -1 : 0
+#var float4 gl_LightSource[5].position : state.light[5].position :  : -1 : 0
+#var float4 gl_LightSource[5].halfVector : state.light[5].half :  : -1 : 0
+#var float3 gl_LightSource[5].spotDirection : state.light[5].spot.direction :  : -1 : 0
+#var float gl_LightSource[5].spotExponent : state.light[5].attenuation.w :  : -1 : 0
+#var float gl_LightSource[5].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[5].spotCosCutoff : state.light[5].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[5].constantAttenuation : state.light[5].attenuation.x :  : -1 : 0
+#var float gl_LightSource[5].linearAttenuation : state.light[5].attenuation.y :  : -1 : 0
+#var float gl_LightSource[5].quadraticAttenuation : state.light[5].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[6].ambient : state.light[6].ambient :  : -1 : 0
+#var float4 gl_LightSource[6].diffuse : state.light[6].diffuse :  : -1 : 0
+#var float4 gl_LightSource[6].specular : state.light[6].specular :  : -1 : 0
+#var float4 gl_LightSource[6].position : state.light[6].position :  : -1 : 0
+#var float4 gl_LightSource[6].halfVector : state.light[6].half :  : -1 : 0
+#var float3 gl_LightSource[6].spotDirection : state.light[6].spot.direction :  : -1 : 0
+#var float gl_LightSource[6].spotExponent : state.light[6].attenuation.w :  : -1 : 0
+#var float gl_LightSource[6].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[6].spotCosCutoff : state.light[6].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[6].constantAttenuation : state.light[6].attenuation.x :  : -1 : 0
+#var float gl_LightSource[6].linearAttenuation : state.light[6].attenuation.y :  : -1 : 0
+#var float gl_LightSource[6].quadraticAttenuation : state.light[6].attenuation.z :  : -1 : 0
+#var float4 gl_LightSource[7].ambient : state.light[7].ambient :  : -1 : 0
+#var float4 gl_LightSource[7].diffuse : state.light[7].diffuse :  : -1 : 0
+#var float4 gl_LightSource[7].specular : state.light[7].specular :  : -1 : 0
+#var float4 gl_LightSource[7].position : state.light[7].position :  : -1 : 0
+#var float4 gl_LightSource[7].halfVector : state.light[7].half :  : -1 : 0
+#var float3 gl_LightSource[7].spotDirection : state.light[7].spot.direction :  : -1 : 0
+#var float gl_LightSource[7].spotExponent : state.light[7].attenuation.w :  : -1 : 0
+#var float gl_LightSource[7].spotCutoff : NONE :  : -1 : 0
+#var float gl_LightSource[7].spotCosCutoff : state.light[7].spot.direction.w :  : -1 : 0
+#var float gl_LightSource[7].constantAttenuation : state.light[7].attenuation.x :  : -1 : 0
+#var float gl_LightSource[7].linearAttenuation : state.light[7].attenuation.y :  : -1 : 0
+#var float gl_LightSource[7].quadraticAttenuation : state.light[7].attenuation.z :  : -1 : 0
+#var float4 gl_FragColor : $vout.COLOR : COL : -1 : 1
+#var float4 gl_Fog.color : state.fog.color :  : -1 : 0
+#var float gl_Fog.density : state.fog.params.x :  : -1 : 0
+#var float gl_Fog.start : state.fog.params.y :  : -1 : 0
+#var float gl_Fog.end : state.fog.params.z : c[6] : -1 : 1
+#var float gl_Fog.scale : state.fog.params.w :  : -1 : 0
+#var sampler2D tex :  : texunit 0 : -1 : 1
+#var sampler2D giTex :  : texunit 2 : -1 : 1
+#var sampler2D bump :  : texunit 1 : -1 : 1
+#var float2 texCoord : $vin.TEX0 : TEX0 : -1 : 1
+#var float3 tangentU : $vin.TEX1 : TEX1 : -1 : 1
+#var float3 tangentV : $vin.TEX2 : TEX2 : -1 : 1
+#var float3 normal : $vin.TEX3 : TEX3 : -1 : 1
+#var float3 eyePos : $vin.TEX4 : TEX4 : -1 : 1
+#var float2 giUV : $vin.TEX5 : TEX5 : -1 : 1
+#var float shadowVal : $vin.TEX6 : TEX6 : -1 : 1
+#var float3 dynLight : $vin.TEX7 : TEX7 : -1 : 1
+#var float3 dynLightSpec :  :  : -1 : 0
+#var bool bumped :  : c[7] : -1 : 1
+#var bool isNormalMap :  : c[8] : -1 : 1
+#var float scale :  : c[9] : -1 : 1
+#var bool gIed :  : c[10] : -1 : 1
+#var bool texed :  : c[11] : -1 : 1
+#var float2 bumpSizeInv :  :  : -1 : 0
+#var <none>4 $kill_0000 : $vout.$kill : $kill : -1 : 0
+#var <none>4 $kill_0001 : $vout.$kill : $kill : -1 : 0
+#const c[12] = 0 1 4 2
+#const c[13] = 0.1 0 0.00390625 0.5
+#const c[14] = 3 9.9999997e-06 2.718282 100
+#const c[15] = 6.5651415e-07 1.1518839e-06 1.8740494e-06 1.25
+#const c[16] = -1.5 0.019894367 0 0.0099999998
+#const c[17] = 1.1e-05 1.93e-05 3.1399999e-05
+PARAM c[18] = { state.material.front.specular,
+		state.material.front.shininess,
+		state.light[0].diffuse,
+		state.light[0].position,
+		state.light[1].diffuse,
+		state.light[1].position,
+		state.fog.params,
+		program.local[7..11],
+		{ 0, 1, 4, 2 },
+		{ 0.1, 0, 0.00390625, 0.5 },
+		{ 3, 9.9999997e-06, 2.718282, 100 },
+		{ 6.5651415e-07, 1.1518839e-06, 1.8740494e-06, 1.25 },
+		{ -1.5, 0.019894367, 0, 0.0099999998 },
+		{ 1.1e-05, 1.93e-05, 3.1399999e-05 } };
+TEMP R0;
+TEMP R1;
+TEMP R2;
+TEMP R3;
+TEMP R4;
+TEMP R5;
+TEMP R6;
+ADD R0.xy, fragment.texcoord[0], c[13].yzzw;
+ADD R0.zw, fragment.texcoord[0].xyxy, -c[13].xyyz;
+TEX R1.x, R0.zwzw, texture[1], 2D;
+TEX R0.x, R0, texture[1], 2D;
+ADD R0.y, R1.x, -R0.x;
+ADD R1.xy, fragment.texcoord[0], c[13].zyzw;
+ADD R0.zw, fragment.texcoord[0].xyxy, -c[13].xyzy;
+TEX R0.x, R1, texture[1], 2D;
+TEX R1.x, R0.zwzw, texture[1], 2D;
+ADD R0.x, R1, -R0;
+ABS R0.z, c[8].x;
+CMP R0.w, -R0.z, c[12].x, c[12].y;
+MUL R1.xy, R0, c[9].x;
+TEX R0.xyz, fragment.texcoord[0], texture[1], 2D;
+MUL R2.xyz, -R0, c[12].w;
+ABS R0.w, R0;
+CMP R0.x, -R0.w, c[12], c[12].y;
+ADD R2.xyz, R2, -c[13].x;
+MUL R0.x, R0, c[7];
+MOV R1.z, c[12].y;
+CMP R1.xyz, -R0.x, R2, R1;
+MUL R2.xy, R1, c[9].x;
+CMP R0.xy, -R0.x, R2, R1;
+MOV R0.z, R1;
+DP3 R0.w, R0, R0;
+RSQ R0.w, R0.w;
+MUL R0.xyz, R0.w, R0;
+MUL R1.xyz, R0.x, fragment.texcoord[1];
+MAD R1.xyz, fragment.texcoord[3], R0.z, R1;
+ABS R0.x, c[7];
+MAD R1.xyz, fragment.texcoord[2], R0.y, R1;
+CMP R0.x, -R0, c[12], c[12].y;
+CMP R0.xyz, -R0.x, -fragment.texcoord[3], R1;
+DP3 R0.w, R0, R0;
+DP3 R1.x, c[3], c[3];
+RSQ R1.x, R1.x;
+MUL R2.xyz, R1.x, c[3];
+RSQ R0.w, R0.w;
+MUL R1.xyz, R0.w, R0;
+DP3 R0.x, -R1, R2;
+MOV_SAT R0.y, fragment.texcoord[6].x;
+MAX R0.x, R0, c[12];
+MUL R3.xyz, R0.x, c[2];
+MUL R0.z, -R0.y, c[12].w;
+ABS R0.w, c[10].x;
+CMP R1.w, -R0, c[12].x, c[12].y;
+MUL R0.x, R0.y, R0.y;
+ADD R0.z, R0, c[14].x;
+MUL R0.y, R0.x, R0.z;
+MUL R4.xyz, R3, R0.y;
+DP3 R0.x, c[5], c[5];
+RSQ R0.x, R0.x;
+MUL R0.xyz, R0.x, c[5];
+DP3 R2.w, -R1, R0;
+TEX R0, fragment.texcoord[5], texture[2], 2D;
+CMP R3.xyz, -R1.w, R4, R3;
+MAD R2.w, R2, c[13], c[13];
+MAD R4.xyz, R2.w, c[4], R3;
+CMP R4.xyz, -R1.w, R4, R3;
+MUL_SAT R0.w, R0, c[12].z;
+MUL R2.w, -R0, c[12];
+ABS R1.w, R1;
+CMP R1.w, -R1, c[12].x, c[12].y;
+ADD R2.w, R2, c[14].x;
+MUL R0.w, R0, R0;
+MUL R0.w, R0, R2;
+MUL R5.xyz, R4, R0.w;
+CMP R4.xyz, -R1.w, R5, R4;
+MAD R0.xyz, R0, c[12].z, R4;
+CMP R0.xyz, -R1.w, R0, R4;
+DP3 R2.w, fragment.texcoord[4], fragment.texcoord[4];
+RSQ R0.w, R2.w;
+MUL R6.xyz, R0.w, fragment.texcoord[4];
+DP3 R2.w, -R1, -R6;
+MUL R1.xyz, -R1, R2.w;
+MAD R1.xyz, -R1, c[12].w, -R6;
+DP3 R1.x, R2, -R1;
+MOV R2.w, c[14].y;
+MAX R1.y, R2.w, c[1].x;
+MAX R1.x, R1, c[12];
+POW R2.w, R1.x, R1.y;
+MUL R3.xyz, R3, R2.w;
+MUL R1.xyz, R4, R2.w;
+CMP R1.xyz, -R1.w, R1, R3;
+DP3 R2.w, R2, R6;
+ADD R2.x, -R2.w, c[15].w;
+RCP R1.w, c[6].z;
+MUL R1.w, R1, c[14];
+POW R2.x, R2.x, c[16].x;
+MUL R3.x, R1.w, R2;
+ADD R2.xyz, fragment.texcoord[7], R1;
+MUL R1.y, R3.x, c[16];
+MAD R1.x, R2.w, R2.w, c[12].y;
+MAD R4.xyz, R1.x, c[15], R1.y;
+RCP R0.w, R0.w;
+MUL R1.xyz, -R0.w, R4;
+MUL R3.xyz, R2, c[0];
+POW R2.x, c[14].z, R1.x;
+POW R2.y, c[14].z, R1.y;
+POW R2.z, c[14].z, R1.z;
+ADD R1.xyz, R1.w, c[17];
+ADD R5.xyz, -R2, c[12].y;
+ADD R0.xyz, R0, fragment.texcoord[7];
+RCP R1.x, R1.x;
+RCP R1.z, R1.z;
+RCP R1.y, R1.y;
+MUL R1.xyz, R4, R1;
+MUL R1.xyz, R1, R5;
+TEX R4, fragment.texcoord[0], texture[0], 2D;
+MUL R5.xyz, R1, c[2];
+MUL R1, fragment.color.primary, R4;
+CMP R1, -c[11].x, R1, fragment.color.primary;
+MAD R0.xyz, R1, R0, R3;
+MUL R4.xyz, R5, c[14].w;
+MAD result.color.xyz, R0, R2, R4;
+SLT R0.x, fragment.color.primary.w, c[16].w;
+SLT R0.y, R4.w, c[16].w;
+MOV result.color.w, R1;
+KIL -R0.x;
+KIL -R0.y;
+END
+# 120 instructions, 7 R-regs
