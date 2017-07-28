@@ -479,7 +479,7 @@ void splashDamage(vec3_t center, float range, float damage, int by); // for serv
 
 // drawRay - renders ray, u1 is v1's side, u2 is v2's side
 //           needs to have done glBegin(GL_QUADS)
-void drawRay(vec3_t v1, vec3_t v2, float radius, float u1, float v1, float u2, float v2);
+void drawRay(vec3_t x1, vec3_t x2, float radius, float u1, float v1, float u2, float v2);
 void osdEnter2D();
 void osdLeave2D();
 

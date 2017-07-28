@@ -2187,7 +2187,8 @@ void parse_arg(int argc, char **argv){
 						n++;
 						break;
 					case 'c':
-						arg_connectTo=argv[n+1];
+						// ignore this parameter; used for some other purpose on macOS applications
+						// arg_connectTo=argv[n+1];
 						n++;
 						break;
 					case 'd':

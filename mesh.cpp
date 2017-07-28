@@ -6,6 +6,7 @@
  *  Copyright 2009 tcpp. All rights reserved.
  *
  */
+#include <array>
 #include "global.h"
 #include "mesh.h"
 #include "glpng.h"
@@ -13,7 +14,7 @@
 #include "map.h"
 
 #if GL_ARB_shader_objects
-static GLhandleARB prg_bump1;
+static std::array<GLhandleARB, 4> prg_bump1;
 static GLhandleARB prg_bump2;
 static GLhandleARB prg_bump3;
 #endif
@@ -39,8 +40,6 @@ void xmaterial::begin(bool gi, bool is_fastlight, bool allowGLSL, bool lit1){
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,
 				 color4f(er, eg, eb, 0.f));
 	
-#if GL_ARB_shader_objects && GL_ARB_multitexture
-	
 	if(use_glsl){
 		if(glGetHandleARB(GL_PROGRAM_OBJECT_ARB) || (!allowGLSL))
 			return;
@@ -49,41 +48,43 @@ void xmaterial::begin(bool gi, bool is_fastlight, bool allowGLSL, bool lit1){
 			return;
 	}
 	if(!is_fastlight){
+		int shader_index = (bump ? 1 : 0) | (texed ? 2 : 0);
+		GLhandleARB gl_program = prg_bump1[shader_index];
 		if(bump && use_glsl){
 			glActiveTexture(GL_TEXTURE1_ARB);
 			glBindTexture(GL_TEXTURE_2D, bump);
 			glActiveTexture(GL_TEXTURE0_ARB);
-			glUseProgramObjectARB(prg_bump1);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "tex"),
+			glUseProgramObjectARB(gl_program);
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "tex"),
 						   0);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "bump"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "bump"),
 						   1);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "isNormalMap"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "isNormalMap"),
 						   1);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "bumped"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "bumped"),
 						   1);
-			glUniform1fARB(glGetUniformLocationARB(prg_bump1, "scale"),
+			glUniform1fARB(glGetUniformLocationARB(gl_program, "scale"),
 						   1.f);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "gIed"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "gIed"),
 						   gi?1:0);
-			glUniform2fARB(glGetUniformLocationARB(prg_bump1, "bumpSizeInv"),
+			glUniform2fARB(glGetUniformLocationARB(gl_program, "bumpSizeInv"),
 						   1.f/(float)bW, 1.f/(float)bH);
 			
 		}else if(use_glsl){
-			glUseProgramObjectARB(prg_bump1);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "tex"),
+			glUseProgramObjectARB(gl_program);
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "tex"),
 						   0);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "bump"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "bump"),
 						   0);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "bumped"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "bumped"),
 						   0);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "gIed"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "gIed"),
 						   gi?1:0);
 		}
 		if(use_glsl){
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "texed"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "texed"),
 						   texed?1:0);
-			glUniform1iARB(glGetUniformLocationARB(prg_bump1, "giTex"),
+			glUniform1iARB(glGetUniformLocationARB(gl_program, "giTex"),
 						   2);
 			
 		}
@@ -139,7 +140,6 @@ void xmaterial::begin(bool gi, bool is_fastlight, bool allowGLSL, bool lit1){
 			}
 		}
 	}
-#endif
 	
 }
 void xmaterial::end(){
@@ -156,15 +156,17 @@ void mesh::render(int phase){
 #if GL_ARB_shader_objects
 	if(use_glsl){
 		GLhandleARB ohand=glGetHandleARB(GL_PROGRAM_OBJECT_ARB);
-		glUseProgramObjectARB(prg_bump1);
-		glUniform3fvARB(glGetUniformLocationARB(prg_bump1, "ldV00"), 4,
-						(GLfloat *)&(curLight.v00));
-		glUniform3fvARB(glGetUniformLocationARB(prg_bump1, "ldV10"), 4,
-						(GLfloat *)&(curLight.v10));
-		glUniform3fvARB(glGetUniformLocationARB(prg_bump1, "ldV11"), 4,
-						(GLfloat *)&(curLight.v11));
-		glUniform3fvARB(glGetUniformLocationARB(prg_bump1, "ldV12"), 4,
-						(GLfloat *)&(curLight.v12));
+		for (auto &p: prg_bump1) {
+			glUseProgramObjectARB(p);
+			glUniform3fvARB(glGetUniformLocationARB(p, "ldV00"), 4,
+							(GLfloat *)&(curLight.v00));
+			glUniform3fvARB(glGetUniformLocationARB(p, "ldV10"), 4,
+							(GLfloat *)&(curLight.v10));
+			glUniform3fvARB(glGetUniformLocationARB(p, "ldV11"), 4,
+							(GLfloat *)&(curLight.v11));
+			glUniform3fvARB(glGetUniformLocationARB(p, "ldV12"), 4,
+							(GLfloat *)&(curLight.v12));
+		}
 		glUseProgramObjectARB(ohand);
 	}
 #endif
@@ -344,7 +346,6 @@ void mesh::render(int phase){
 
 				glBegin(GL_TRIANGLES);
 			}
-			//if(mat[face[n*4+3]].da<0.99)
 			
 			for(i=0;i<3;i++){
 				ind=face[n*4+i];
@@ -360,7 +361,6 @@ void mesh::render(int phase){
 				if(gi && cap_multiTex){
 #if GL_ARB_shader_objects && GL_ARB_multitexture
 					if(use_glsl){
-						//glVertexAttrib3fARB(attr_gIvt, gi[ind].x, gi[ind].y, gi[ind].z);
 						glMultiTexCoord2fARB(GL_TEXTURE2_ARB, giUV[(n*3)+i].x, giUV[(n*3)+i].y);
 					}else{
 #endif
@@ -1595,11 +1595,13 @@ void Mesh_init(){
 	
 	if(cap_glsl){
 		// load bump shader
-		prg_bump1=create_program("res/shaders/bump1.vs", "res/shaders/bump1.fs");
-		if(prg_bump1)
-			consoleLog("Mesh_init: compiled program \"bump1\"\n");
-		else
-			consoleLog("Mesh_init: couldn't compile program \"bump1\"\n");
+		for (auto &p: prg_bump1) {
+			p = create_program("res/shaders/bump1.vs", "res/shaders/bump1.fs");
+			if(p)
+				consoleLog("Mesh_init: compiled program \"bump1\"\n");
+			else
+				consoleLog("Mesh_init: couldn't compile program \"bump1\"\n");
+		}
 		
 		prg_bump2=create_program("res/shaders/bump2.vs", "res/shaders/bump2.fs");
 		if(prg_bump2)
@@ -1613,10 +1615,10 @@ void Mesh_init(){
 		else
 			consoleLog("Mesh_init: couldn't compile program \"bump3\"\n");
 
-		attr_tU=glGetAttribLocationARB(prg_bump1, "tU");
-		attr_tV=glGetAttribLocationARB(prg_bump1, "tV");
-		attr_gIvt=glGetAttribLocationARB(prg_bump1, "gIvt");
-		attr_sV=glGetAttribLocationARB(prg_bump1, "sV");
+		attr_tU=glGetAttribLocationARB(prg_bump1[0], "tU");
+		attr_tV=glGetAttribLocationARB(prg_bump1[0], "tV");
+		attr_gIvt=glGetAttribLocationARB(prg_bump1[0], "gIvt");
+		attr_sV=glGetAttribLocationARB(prg_bump1[0], "sV");
 	}else{
 #endif
 		consoleLog("Mesh_init: no programs to compile\n");
